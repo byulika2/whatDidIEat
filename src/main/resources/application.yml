@@ -1,0 +1,126 @@
+
+spring:
+  profiles:
+    active: local
+
+  application:
+    name: portal what did i eat?
+
+  mvc:
+    log-request-details: false
+
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+
+server:
+  port: 8080
+  tomcat:
+    remoteip:
+      remote-ip-header: x-forwarded-for
+      protocol-header: x-forwarded-proto
+      internal-proxies: "10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|20\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|192\\.168\\.\\d{1,3}\\.\\d{1,3}|169\\.254\\.\\d{1,3}\\.\\d{1,3}|127\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|172\\.1[6-9]{1}\\.\\d{1,3}\\.\\d{1,3}|172\\.2[0-9]{1}\\.\\d{1,3}\\.\\d{1,3}|172\\.3[0-1]{1}\\.\\d{1,3}\\.\\d{1,3}|0:0:0:0:0:0:0:1|::1"
+
+logging:
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    root: ERROR
+---
+###################### Begin Of local profile ########################
+spring:
+  profiles: local
+
+  jpa:
+    properties:
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: _aud
+            store_data_at_delete: true
+    show-sql: true
+
+  thymeleaf:
+    prefix: file:src/main/resources/templates/
+    cache: false
+
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+logging:
+  level:
+    io.undertow: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+    org.hibernate: INFO
+    #    org.hibernate.SQL: DEBUG
+    org.hibernate.type: TRACE
+    org.hibernate.type.EnumType: INFO
+    org.hibernate.type.descriptor.sql.BasicExtractor: INFO # ResultSet 결과 출력 로그 너무 많아서 막아두었습니다. TRACE level에서 로깅
+    org.hibernate.engine.internal: WARN
+    com.wefun: DEBUG
+    com.zaxxer.hikari: DEBUG
+
+whatdidieat:
+  hostname: http://local.portal.whatdidieat.kr:8080
+
+#aws:
+#  s3:
+#    hostname:
+#      web: https://cdn-dev.whatdidieat.kr/
+#    bucket:
+#      web: pongdew-whatdidieat-dev-web
+
+fileupload:
+  path:
+    temp: /tmp
+
+
+##### for Multiple Database Settings
+app:
+  datasource:
+    ## portal
+    portal:
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbcUrl: jdbc:mysql://127.0.0.1:3306/what_did_i_eat?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+      username: local_app
+      password: pongdew87!!
+#      jdbcUrl: jdbc:mysql://wefun-dev.cwogpqnsmkxd.ap-northeast-2.rds.amazonaws.com:3306/what_did_i_eat?useUnicode=true&characterEncoding=utf8&validationQuery="select 1"
+#      username: local_app
+#      password: pongdew87!!
+      driverClassName: com.mysql.cj.jdbc.Driver
+      initializationMode: always
+      sqlScriptEncoding: UTF-8
+
+      maximumPoolSize: 20 # 유휴 상태와 사용중인 커넥션을 포함해서 풀이 허용하는 최대 커넥션 개수
+      minimum-idle: 5 # 풀에 유지할 유휴 커넥션의 최소 개수, 설정하지 않을 경우 maximum-pool-size 와 동일
+      idleTimeout: 300000 # 5분, 커넥션이 풀에서 유휴 상태로 남을 수 있는 최대 시간을 밀리초 단위로 지정
+      connectionTimeout: 5000 #5초, 풀에서 커넥션을 구할 때 대기 시간을 밀리초 단위로 지정
+      maxLifetime: 1200000 # 20분, 커넥션의 최대 유지 시간을 밀리초 단위로 설정한다. 이 시간이 지난 커넥션 중에서 사용중인 커넥션은 종료된 이후에 풀에서 제거한다.
+
+  hibernate:
+
+    ## portal
+    portal:
+      physical_naming_strategy: pongdew.portal.whatdidieat.config.PhysicalNamingStrategyImpl
+      hbm2ddl:
+        auto: update
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      cache:
+        use_second_level_cache: false
+        use_query_cache: false
+      generate_statistics: true
+      format_sql: true
+      id:
+        new_generator_mappings: true
+
+###################### End Of local profile ########################
