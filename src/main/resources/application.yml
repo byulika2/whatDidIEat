@@ -4,7 +4,7 @@ spring:
     active: local
 
   application:
-    name: portal what did i eat?
+    name: what did i eat?
 
   mvc:
     log-request-details: false
@@ -42,7 +42,6 @@ spring:
       org:
         hibernate:
           envers:
-            audit_table_suffix: _aud
             store_data_at_delete: true
     show-sql: true
 
@@ -65,20 +64,12 @@ logging:
     #    org.hibernate.SQL: DEBUG
     org.hibernate.type: TRACE
     org.hibernate.type.EnumType: INFO
-    org.hibernate.type.descriptor.sql.BasicExtractor: INFO # ResultSet 결과 출력 로그 너무 많아서 막아두었습니다. TRACE level에서 로깅
+    org.hibernate.type.descriptor.sql.BasicExtractor: INFO # ResultSet 占쏙옙占� 占쏙옙占� 占싸깍옙 占십뱄옙 占쏙옙占싣쇽옙 占쏙옙占싣두억옙占쏙옙占싹댐옙. TRACE level占쏙옙占쏙옙 占싸깍옙
     org.hibernate.engine.internal: WARN
     com.wefun: DEBUG
     com.zaxxer.hikari: DEBUG
 
-whatdidieat:
-  hostname: http://local.portal.whatdidieat.kr:8080
-
-#aws:
-#  s3:
-#    hostname:
-#      web: https://cdn-dev.whatdidieat.kr/
-#    bucket:
-#      web: pongdew-whatdidieat-dev-web
+hostname: http://localhost:8080
 
 fileupload:
   path:
@@ -91,9 +82,9 @@ app:
     ## portal
     portal:
       type: com.zaxxer.hikari.HikariDataSource
-      jdbcUrl: jdbc:mysql://127.0.0.1:3306/what_did_i_eat?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
-      username: local_app
-      password: pongdew87!!
+      jdbcUrl: jdbc:mysql://localhost:3306/what_did_i_eat?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+      username: local_user
+      password: 1111
 #      jdbcUrl: jdbc:mysql://wefun-dev.cwogpqnsmkxd.ap-northeast-2.rds.amazonaws.com:3306/what_did_i_eat?useUnicode=true&characterEncoding=utf8&validationQuery="select 1"
 #      username: local_app
 #      password: pongdew87!!
@@ -101,11 +92,11 @@ app:
       initializationMode: always
       sqlScriptEncoding: UTF-8
 
-      maximumPoolSize: 20 # 유휴 상태와 사용중인 커넥션을 포함해서 풀이 허용하는 최대 커넥션 개수
-      minimum-idle: 5 # 풀에 유지할 유휴 커넥션의 최소 개수, 설정하지 않을 경우 maximum-pool-size 와 동일
-      idleTimeout: 300000 # 5분, 커넥션이 풀에서 유휴 상태로 남을 수 있는 최대 시간을 밀리초 단위로 지정
-      connectionTimeout: 5000 #5초, 풀에서 커넥션을 구할 때 대기 시간을 밀리초 단위로 지정
-      maxLifetime: 1200000 # 20분, 커넥션의 최대 유지 시간을 밀리초 단위로 설정한다. 이 시간이 지난 커넥션 중에서 사용중인 커넥션은 종료된 이후에 풀에서 제거한다.
+      maximumPoolSize: 20
+      minimum-idle: 5
+      idleTimeout: 300000
+      connectionTimeout: 5000
+      maxLifetime: 1200000
 
   hibernate:
 

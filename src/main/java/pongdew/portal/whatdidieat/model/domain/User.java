@@ -1,60 +1,41 @@
 package pongdew.portal.whatdidieat.model.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.LastModifiedBy;
-import pongdew.portal.whatdidieat.util.StringCryptoConverter;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 @Getter
-@Setter
-public class User implements Serializable {
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+public class User extends BaseColumns {
 
-    @Id
-    @Column(name="user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @Column(name = "user_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_group_id")
-    private UserGroup userGroup;
+  @OneToMany(mappedBy = "user")
+  private List<UserTeam> teamList = new ArrayList<>();
 
-    private String email;
+  private String email;
 
-    @Column(name = "password", length=1000)
-    @Convert(converter = StringCryptoConverter.class)
-    private String pw;
+  @Column(name = "password", length = 1000)
+  private String password;
 
-    private String name;
-
-    @Column(name="cell_phone", length=20)
-    private String cellPhone;
-
-
-    /**
-     * 기본 세팅
-     * */
-    @Column(name="create_at", nullable = false, updatable = false)
-    @CreationTimestamp
-    private LocalDateTime createAt;
-
-    @CreatedBy
-    @Column(name="create_id", updatable = false)
-    protected Long createBy;
-
-    @UpdateTimestamp
-    @Column(name="update_at", nullable = false)
-    private LocalDateTime updateAt;
-
-    @LastModifiedBy
-    @Column(name="update_id")
-    protected Long updateBy;
+  private String name;
 }
