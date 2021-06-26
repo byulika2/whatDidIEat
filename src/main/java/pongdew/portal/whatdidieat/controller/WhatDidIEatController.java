@@ -6,8 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WhatDidIEatController {
 
-    @GetMapping("/")
+    @GetMapping({"/", "/dashboard"})
     public String dashboard(){
-        return  "test";
+        return  "contents/dashboard";
+    }
+
+
+    @GetMapping("/payments")
+    public String payments() {
+        return "contents/payments";
     }
 }

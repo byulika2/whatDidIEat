@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <th:block th:replace="common/header::header"></th:block>
+</head>
+<body class="app">
+
+<header class="app-header fixed-top">
+  <!-- gnb -->
+  <th:block th:replace="common/gnb::gnb"></th:block>
+
+  <!-- lnb -->
+  <th:block th:replace="common/lnb::lnb"></th:block>
+</header>
+
+<div class="app-wrapper">
+  <!-- content -->
+  <th:block layout:fragment="content"></th:block>
+
+</div><!--//app-wrapper-->
+<!-- footer -->
+<th:block th:replace="common/footer::footer"></th:block>
+
+
+<!-- Javascript -->
+<script src="assets/plugins/popper.min.js"></script>
+<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Charts JS -->
+<script src="assets/plugins/chart.js/chart.min.js"></script>
+<script src="assets/js/index-charts.js"></script>
+
+<!-- Page Specific JS -->
+<script src="assets/js/app.js"></script>
+</body>
+</html>
