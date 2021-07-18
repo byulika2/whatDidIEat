@@ -37,6 +37,7 @@ public class WhatDidIEatController {
   public String payments(Model model) {
 
     model.addAttribute("path", "payments");
+
     return "contents/payments";
   }
 
