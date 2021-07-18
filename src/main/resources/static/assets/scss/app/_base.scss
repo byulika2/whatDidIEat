@@ -123,6 +123,17 @@ button.close {
 	}
 }
 
+.app-btn-warning {
+	background: $theme-color-warning;
+	color: #fff;
+	border-color: $theme-color-warning;
+	&:hover {
+		color: #fff;
+		background: lighten($theme-color-warning, 5%);
+		border-color: lighten($theme-color-warning, 5%);
+	}
+}
+
 .app-btn-secondary {
 	background: white;
 	color: $theme-text-color-secondary;
